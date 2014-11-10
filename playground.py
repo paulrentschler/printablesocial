@@ -75,7 +75,7 @@ def change_color(img, new_color):
 
 
 if __name__ == '__main__':
-    img = make_qr('http://www.facebook.com/huck-institutes')
+    img = make_qr('https://www.facebook.com/groups/bluelionscuba/')
     fb = img.convert("RGB")
     fb = change_color(img.convert("RGB"), (59,89,152))
 
