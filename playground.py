@@ -1,7 +1,8 @@
 #!/Users/paulrentschler/Documents/projects/printablesocial/bin/python
 
-from PIL import ImageFont
+from PIL import Image
 from PIL import ImageDraw
+from PIL import ImageFont
 import qrcode
 
 
@@ -73,22 +74,27 @@ def change_color(img, new_color):
     return img
 
 
-
-if __name__ == '__main__':
-    img = make_qr('https://www.facebook.com/groups/bluelionscuba/')
-    fb = img.convert("RGB")
+def make_facebook(url):
+    img = make_qr(url)
     fb = change_color(img.convert("RGB"), (59,89,152))
-
     draw = ImageDraw.Draw(fb)
-    #font = ImageFont.truetype("Tahoma.ttf", 600)
     font = ImageFont.truetype('LucidaGrandeBold.ttf', 475)
     draw.text((200, 150), "f", (255,255,255), font=font)
-    # bottom Y = 491
-
-
-    img.save("original.png")
+    img.save("fb-original.png")
     fb.save("facebook.png")
 
 
+def make_twitter(url):
+    img = make_qr(url)
+    twitter = change_color(img.convert("RGB"), (85,172,238))
+    logo = Image.open('twitter-logo.png')
+    twitter.paste(logo, (0,0), logo)
+    img.save('tw-original.png')
+    twitter.save('twitter.png')
+
+
+if __name__ == '__main__':
+    make_facebook('https://www.facebook.com/paul.rentschler')
+    make_twitter('https://twitter.com/paulrentschler')
 
 
