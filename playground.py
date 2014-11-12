@@ -93,8 +93,19 @@ def make_twitter(url):
     twitter.save('twitter.png')
 
 
+def make_youtube(url):
+    img = make_qr(url)
+    yt = change_color(img.convert("RGB"), (229,45,39))
+    #yt = change_color(img.convert("RGB"), (51,51,51))
+    logo = Image.open('youtube-logo.png')
+    yt.paste(logo, (0,0), logo)
+    img.save('yt-original.png')
+    yt.save('youtube.png')
+
+
 if __name__ == '__main__':
     make_facebook('https://www.facebook.com/paul.rentschler')
     make_twitter('https://twitter.com/paulrentschler')
+    make_youtube('http://www.youtube.com')
 
 
