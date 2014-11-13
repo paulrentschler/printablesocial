@@ -2,7 +2,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-import qrcode
+import os, qrcode
 
 
 class PrintableSocial:
@@ -45,11 +45,12 @@ class PrintableSocial:
         Platform indicates which social media platform to create the QR Code
         icon for and account is appended to the standard url for that platform
         """
+        parent = os.path.dirname(os.path.realpath(__file__))
         if platform in self.platforms:
-            url = self.platforms[platform]
+            url = self.platforms[platform]['url']
             if account != '':
                 url += account
-            mask = Image.open("%s.png" % platform)
+            mask = Image.open("%s/%s.png" % (parent, platform))
             return self._social_qr(
                 url,
                 self.platforms[platform]['color'],
@@ -77,6 +78,7 @@ class PrintableSocial:
         """
         Returns a QR Code image that looks like a social media icon
         """
+        logo_mask = logo_mask.convert("RGBA")
         img = self._qrcode(url)
         social_img = self._colorize(img.convert("RGB"), color)
         social_img.paste(logo_mask, (0,0), logo_mask)
